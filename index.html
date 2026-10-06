@@ -11,7 +11,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Rotina da Família</title>
+<title>Rotina da Família — PWA Teste v2</title>
 <style>
 :root{--primary:#4f46e5;--secondary:#7c3aed;--green:#16a34a;--red:#dc2626;--gold:#f59e0b;--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#64748b;--border:#e2e8f0}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
@@ -47,20 +47,10 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:8px 0 28px}
 <body>
 <header><h1>🎮 Rotina da Família</h1><p>Pequenas atitudes • grandes conquistas</p></header>
 <main>
-<section class="card" id="emptyState" style="display:none;text-align:center;padding:28px 18px">
-<div style="font-size:48px;margin-bottom:8px">👨‍👩‍👧‍👦</div>
-<h2 style="margin:0 0 6px">Bem-vindo à Rotina da Família!</h2>
-<p class="muted" style="max-width:520px;margin:0 auto 16px">
-Este aplicativo é novo neste aparelho. Cadastre a primeira criança para começar.
-Os dados ficam salvos neste navegador e são separados dos dados de outras famílias.
-</p>
-<button class="primary" type="button" onclick="openChildModal()">➕ Cadastrar primeira criança</button>
-</section>
 <div class="tabs" id="childTabs"></div>
 
-<div id="childContent">
 <section class="card">
- <div class="hero><div class="avatar" id="avatar">👦</div><div><h2 id="name">Gui</h2><div class="level" id="level">Nível 1</div><div class="muted" id="xpText">0 / 100 XP</div></div><div class="coins">🪙 <span id="coins">0</span></div></div>
+ <div class="hero"><div class="avatar" id="avatar">👦</div><div><h2 id="name">Gui</h2><div class="level" id="level">Nível 1</div><div class="muted" id="xpText">0 / 100 XP</div></div><div class="coins">🪙 <span id="coins">0</span></div></div>
  <div class="xpbar"><div id="xpbar"></div></div>
  <div class="stats"><div class="stat"><b id="todayPts">0</b><span>pontos hoje</span></div><div class="stat"><b id="todayDone">0%</b><span>missões hoje</span></div><div class="stat"><b id="streak">0</b><span>dias completos</span></div></div>
 </section>
@@ -84,27 +74,27 @@ Os dados ficam salvos neste navegador e são separados dos dados de outras famí
 <section class="card"><h3>🎁 Loja de recompensas</h3><div id="rewards"></div></section>
 <section class="card"><h3>🎯 Meta da semana</h3><div class="weekrow"><span id="weekText"></span><b id="weekPct">0%</b></div><div class="progress"><div id="weekBar"></div></div></section>
 
-</div>
-<section class="card"><details><summary>👨‍👩‍👧 Área dos pais</summary>
+<section class="card" id="parentControl">
+<h2 style="margin:0 0 4px">👨‍👩‍👧 Controle dos pais</h2>
+<p class="muted" style="margin:0 0 14px">Aqui você pode cadastrar crianças e personalizar missões, comportamentos e recompensas.</p>
+<div class="settings">
 <div class="settings">
  <h3>👨‍👩‍👧 Crianças</h3><div id="manageChildren"></div>
-<div id="parentEmptyNote" class="muted" style="margin:6px 0 10px"></div>
  <button class="primary" onclick="openChildModal()">➕ Adicionar criança</button>
  <hr style="border:0;border-top:1px solid var(--border);width:100%">
  <h3>📋 Missões</h3>
- <button class="primary" onclick="if(!child){return alert('Cadastre uma criança primeiro.')}openMissionModal()">➕ Nova missão</button>
+ <button class="primary" onclick="openMissionModal()">➕ Nova missão</button>
  <div style="margin-top:10px" id="manageTasks"></div>
  <hr style="border:0;border-top:1px solid var(--border);width:100%">
  <h3>😊 Gerenciar comportamentos</h3>
- <button class="primary" onclick="if(!child){return alert('Cadastre uma criança primeiro.')}openBehaviorModal()">➕ Novo comportamento</button>
+ <button class="primary" onclick="openBehaviorModal()">➕ Novo comportamento</button>
  <div id="manageBehaviors" style="margin-top:8px"></div>
  <hr style="border:0;border-top:1px solid var(--border);width:100%">
  <h3>🎁 Gerenciar recompensas</h3>
- <button class="primary" onclick="if(!child){return alert('Cadastre uma criança primeiro.')}openRewardModal()">➕ Nova recompensa</button>
+ <button class="primary" onclick="openRewardModal()">➕ Nova recompensa</button>
  <div id="manageRewards" style="margin-top:8px"></div>
  <hr style="border:0;border-top:1px solid var(--border);width:100%">
  <h3>☁️ Backup e restauração</h3>
-<div class="muted" style="margin-bottom:8px">O uso diário é salvo automaticamente neste aparelho. O JSON serve para transferência ou segurança.</div>
  <div class="actions">
    <button class="primary" onclick="exportBackup()">💾 Baixar backup</button>
    <button class="secondary" onclick="document.getElementById('backupFile').click()">📥 Restaurar backup</button>
@@ -123,7 +113,7 @@ Os dados ficam salvos neste navegador e são separados dos dados de outras famí
  <button class="secondary" onclick="saveSettings()">Salvar configurações</button>
  <button class="secondary" onclick="restoreDefaults()">Restaurar missões padrão</button>
  <button class="danger" onclick="clearAll()">Zerar dados deste perfil</button>
-</div></details></section>
+</div></section>
 
 <section class="card history-card">
  <details id="historyDetails">
@@ -298,44 +288,26 @@ function renderTabs(){
  document.getElementById('childTabs').innerHTML=names.map(n=>`<button class="tab ${n===child?'active':''}" onclick="selectChild('${escAttr(n)}',this)">${esc(db.children[n].avatar)} ${esc(n)}</button>`).join('');
 }
 function render(){
- const names=Object.keys(db.children||{});
- const empty=document.getElementById('emptyState');
- const content=document.getElementById('childContent');
- const tabs=document.getElementById('childTabs');
- const parentNote=document.getElementById('parentEmptyNote');
- if(!names.length){
-   child=null;
-   empty.style.display='block';
-   content.style.display='none';
-   tabs.innerHTML='';
-   if(parentNote)parentNote.textContent='Nenhuma criança cadastrada. Adicione uma para liberar as funções da rotina.';
-   renderChildren();
-   renderManageTasksEmpty();
-   renderManageBehaviorsEmpty();
-   renderManageRewardsEmpty();
-   return;
- }
- if(!db.children[child]) child=names[0];
- empty.style.display='none';
- content.style.display='block';
- renderTabs();
- let x=p(),li=levelInfo();
- document.getElementById('avatar').textContent=x.avatar;
- document.getElementById('name').textContent=child;
- document.getElementById('level').textContent='Nível '+li.level;
- document.getElementById('xpText').textContent=`${li.into} / 100 XP`;
- document.getElementById('xpbar').style.width=li.percent+'%';
- document.getElementById('coins').textContent=x.coins;
- let d=day();
- document.getElementById('todayPts').textContent=d.points;
- let active=activeTasks(),done=d.done.filter(i=>x.tasks[i]&&active.some(a=>a.index===i)).length;
- document.getElementById('todayDone').textContent=(active.length?Math.round(done/active.length*100):0)+'%';
- document.getElementById('selectedDate').value=selectedDate;
- document.getElementById('selectedDateText').textContent=formatSelectedDate();
+ renderTabs();renderBehaviors();
+ let x=p(),d=day(),li=levelInfo();
+ document.getElementById('avatar').textContent=x.avatar;document.getElementById('name').textContent=child;
+ document.getElementById('level').textContent='Nível '+li.level;document.getElementById('xpText').textContent=`${li.into} / 100 XP`;document.getElementById('xpbar').style.width=li.into+'%';document.getElementById('coins').textContent=x.coins;document.getElementById('todayPts').textContent=d.points;
+ document.getElementById('selectedDate').value=selectedDate;document.getElementById('selectedDateText').textContent=formatSelectedDate();
  document.getElementById('missionsTitle').textContent=selectedDate===today()?'📋 Missões de hoje':'📋 Missões de '+dateBR(selectedDate,true);
- renderTasks();renderBehaviors();renderMedals();renderRewards();renderWeek();renderManageTasks();renderChildren();renderManageBehaviors();renderManageRewards();renderHistory();
- if(parentNote)parentNote.textContent='';
+ let active=x.tasks.filter(activeTask),done=active.filter((t,i)=>d.done.includes(x.tasks.indexOf(t))).length;
+ document.getElementById('todayDone').textContent=(active.length?Math.round(done/active.length*100):0)+'%';
+ document.getElementById('tasks').innerHTML=active.length?active.map(t=>{let i=x.tasks.indexOf(t);return `<div class="task ${d.done.includes(i)?'done':''}"><input type="checkbox" ${d.done.includes(i)?'checked':''} onchange="toggleTask(${i},this.checked)"><label>${esc(t.name)}</label><span class="schedule">${frequencyLabel(t)}</span><span class="pts">+${t.points} XP</span></div>`}).join(''):'<div class="muted">Nenhuma missão programada para este dia.</div>';
+ renderWeek();renderMedals();renderRewards();renderHistory();renderManageTasks();renderChildren();renderManageBehaviors();renderManageRewards();
+ document.getElementById('taskPoints').value=x.taskPoints;document.getElementById('weeklyGoal').value=x.weeklyGoal;
 }
+function toggleTask(i,on){
+ let x=p(),d=day(),t=x.tasks[i],was=d.done.includes(i);
+ if(on&&!was){d.done.push(i);d.points+=t.points;x.xp+=t.points;x.coins+=t.points;x.totalDone++;x.history.unshift({date:selectedDate,text:'Concluiu: '+t.name,delta:t.points})}
+ if(!on&&was){d.done=d.done.filter(z=>z!==i);d.points-=t.points;x.xp=Math.max(0,x.xp-t.points);x.coins=Math.max(0,x.coins-t.points);x.totalDone=Math.max(0,x.totalDone-1);x.history.unshift({date:selectedDate,text:'Desmarcou: '+t.name,delta:-t.points})}
+ x.days[selectedDate]=d;save();render();
+}
+function behavior(points,text){let x=p(),d=day();d.points+=points;x.xp=Math.max(0,x.xp+points);x.coins=Math.max(0,x.coins+points);x.days[selectedDate]=d;x.history.unshift({date:selectedDate,text,delta:points});save();render()}
+
 function renderBehaviors(){
  let x=p(),el=document.getElementById('behaviors');
  el.innerHTML=x.behaviors.length?x.behaviors.map(b=>{
@@ -447,18 +419,6 @@ function renderWeek(){
 function renderMedals(){let x=p(),li=levelInfo(),d={...x,level:li.level};document.getElementById('medals').innerHTML=MEDALS.map(m=>`<div class="medal ${m[2](d)?'':'locked'}">${m[0]}<small>${m[1]}</small></div>`).join('')}
 function renderRewards(){let x=p();document.getElementById('rewards').innerHTML=x.rewards.map(r=>`<div class="reward"><span>${esc(r.name)}</span><b>🪙 ${r.cost}</b><button ${x.coins<r.cost?'disabled':''} onclick="redeem(${r.id})">Trocar</button></div>`).join('')}
 function redeem(id){let x=p(),r=x.rewards.find(z=>z.id===id);if(!r||x.coins<r.cost)return;x.coins-=r.cost;x.redeemed.unshift({date:today(),reward:r.name,cost:r.cost});x.history.unshift({date:today(),text:'Resgatou: '+r.name,delta:-r.cost});save();render();alert('🎉 Recompensa resgatada!')}
-function renderManageTasksEmpty(){
- const el=document.getElementById('manageTasks');
- if(el)el.innerHTML='<div class="muted">Cadastre uma criança para configurar as missões.</div>';
-}
-function renderManageBehaviorsEmpty(){
- const el=document.getElementById('manageBehaviors');
- if(el)el.innerHTML='<div class="muted">Cadastre uma criança para configurar os comportamentos.</div>';
-}
-function renderManageRewardsEmpty(){
- const el=document.getElementById('manageRewards');
- if(el)el.innerHTML='<div class="muted">Cadastre uma criança para configurar as recompensas.</div>';
-}
 function renderManageTasks(){
  let x=p();document.getElementById('manageTasks').innerHTML=x.tasks.length?x.tasks.map((t,i)=>`<div class="manageTask"><span>${i+1}. ${esc(t.name)}</span><span class="schedule">${frequencyLabel(t)}</span><button class="edit" onclick="openMissionModal(${i})">Editar</button><button class="danger" onclick="deleteTask(${i})">Excluir</button></div>`).join(''):'<div class="muted">Nenhuma missão cadastrada.</div>';
 }
@@ -500,10 +460,7 @@ function saveChild(){
   if(name!==editingChild&&db.children[name])return alert('Já existe uma criança com esse nome.');
   if(name!==editingChild){db.children[name]=db.children[editingChild];delete db.children[editingChild];if(child===editingChild)child=name}
   db.children[name].avatar=avatar;
- }else{
-  if(db.children[name])return alert('Já existe uma criança com esse nome.');
-  let x=profile();x.avatar=avatar;db.children[name]=x;child=name;
- }
+ }else{if(db.children[name])return alert('Já existe uma criança com esse nome.');let x=profile();x.avatar=avatar;db.children[name]=x;child=name}
  save();closeModal('childModal');render();
 }
 function deleteChild(name){let names=Object.keys(db.children);if(names.length<=1)return alert('É necessário manter pelo menos uma criança.');if(!confirm(`Excluir o perfil de ${name} e todos os seus dados?`))return;delete db.children[name];if(child===name)child=Object.keys(db.children)[0];save();render()}
@@ -516,14 +473,9 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;',
 function escAttr(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 render();
 </script>
-
 <script>
 if ('serviceWorker' in navigator) {
- window.addEventListener('load', function(){
-  navigator.serviceWorker.register('./service-worker.js').catch(function(){});
- });
+ window.addEventListener('load',function(){navigator.serviceWorker.register('./service-worker.js').catch(function(){});});
 }
-</script>
-
-</body>
+</script></body>
 </html>

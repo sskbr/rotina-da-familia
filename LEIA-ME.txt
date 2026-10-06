@@ -1,19 +1,18 @@
-ROTINA DA FAMÍLIA — PWA DE TESTE
+ROTINA DA FAMÍLIA — PWA DE TESTE v2
 
-Versão sem login, preparada para testes com amigos.
+Esta versão mantém o Controle dos Pais visível e inclui:
+- adicionar, editar e excluir crianças;
+- adicionar, editar e excluir missões;
+- pontos/XP das missões;
+- frequência: todos os dias, segunda a sexta, segunda a domingo ou dias selecionados;
+- seleção individual de dias;
+- navegação por data nas missões;
+- adicionar, editar, excluir e pontuar comportamentos;
+- adicionar, editar, excluir e definir custo de recompensas;
+- medalhas, níveis, moedas e histórico;
+- histórico recolhível;
+- backup/restauração JSON;
+- PWA e funcionamento offline após o primeiro acesso;
+- sem login: cada aparelho/navegador possui seus próprios dados.
 
-- Cada aparelho/navegador mantém seus próprios dados.
-- Nenhuma criança é cadastrada inicialmente.
-- O usuário cadastra a primeira criança.
-- Missões, comportamentos, recompensas, medalhas e histórico.
-- Navegação por data e histórico recolhível.
-- Backup/restauração JSON.
-- Instalação como PWA.
-- Cache para funcionamento offline após o primeiro acesso.
-
-Publicação:
-1. Envie todos os arquivos para a raiz do repositório GitHub.
-2. Ative GitHub Pages: Settings > Pages > Deploy from a branch > main > /(root).
-3. Abra a URL no celular e escolha Instalar aplicativo / Adicionar à tela inicial.
-
-Importante: os dados não ficam no GitHub. Para sincronizar uma família em vários celulares será necessária uma futura versão com nuvem/login.
+Para atualizar o GitHub Pages, substitua os arquivos atuais pelos arquivos deste pacote.
