@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#6d28d9">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -13,320 +13,515 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Rotina da Família</title>
 <style>
-:root{--primary:#6d28d9;--primary2:#8b5cf6;--bg:#f5f3ff;--card:#fff;--text:#1f2937;--muted:#6b7280;--border:#e5e7eb;--green:#16a34a;--red:#dc2626}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;padding:22px 16px;text-align:center}
-header h1{margin:0;font-size:25px} header p{margin:6px 0 0;opacity:.9;font-size:13px}
-main{max-width:760px;margin:auto;padding:16px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
-h2{font-size:19px;margin:0 0 12px}.muted{color:var(--muted);font-size:13px}
-.empty{text-align:center;padding:30px 12px}.empty .emoji{font-size:46px;margin-bottom:8px}
-button{border:0;border-radius:11px;padding:11px 14px;font-weight:700;cursor:pointer;font-size:14px}
-.primary{background:var(--primary);color:#fff}.secondary{background:#ede9fe;color:#5b21b6}.danger{background:#fee2e2;color:#991b1b}
-.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:120px}
-input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:#fff;font-size:16px}
-label{display:block;font-size:13px;font-weight:700;margin:10px 0 5px}
-.item{border:1px solid var(--border);border-radius:13px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.item small{color:var(--muted)}
-.hidden{display:none!important}
-.date-nav{display:grid;grid-template-columns:46px 1fr 46px;align-items:center;gap:8px;margin-bottom:12px}
-.date-arrow{width:46px;height:46px;background:#ede9fe;color:#5b21b6;font-size:30px}
-.date-center{text-align:center}.date-label{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--primary);font-weight:900;font-size:16px;padding:7px 10px}
-.date-picker-hidden{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.mission{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:13px;margin:8px 0}
-.mission input{width:22px;height:22px;flex:none}.mission.done{background:#f0fdf4;border-color:#bbf7d0}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#f3f4f6;font-size:12px}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
-.modalbox{background:#fff;border-radius:18px;padding:18px;width:min(500px,100%);max-height:90vh;overflow:auto}
-hr{border:0;border-top:1px solid var(--border);margin:16px 0}
+:root{--primary:#4f46e5;--secondary:#7c3aed;--green:#16a34a;--red:#dc2626;--gold:#f59e0b;--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#64748b;--border:#e2e8f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
+header{color:#fff;padding:22px 18px 28px;background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:0 0 28px 28px}
+header h1{margin:0;font-size:25px}header p{margin:4px 0 0;opacity:.9}main{max-width:820px;margin:auto;padding:15px}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px}.tab{min-width:125px;border:0;padding:12px 14px;border-radius:14px;background:#e8eafc;color:#3730a3;font-weight:800;font-size:15px}.tab.active{background:var(--primary);color:#fff}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 4px 16px #1720330b}
+.hero{display:flex;align-items:center;gap:14px}.avatar{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:#eef2ff;font-size:40px}
+.hero h2{margin:0 0 3px}.level{font-weight:800;color:var(--primary)}.coins{margin-left:auto;background:#fff7d6;border-radius:20px;padding:8px 11px;font-weight:800;color:#a16207}
+.xpbar{height:12px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:12px}.xpbar div{height:100%;background:linear-gradient(90deg,#f59e0b,#facc15);border-radius:99px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{background:#f8fafc;border-radius:14px;text-align:center;padding:10px}.stat b{font-size:21px;display:block}.stat span{font-size:11px;color:var(--muted)}
+h3{margin:3px 0 12px}
+.date-nav{display:grid;grid-template-columns:46px 1fr 46px;align-items:center;gap:8px;margin-bottom:12px}.date-arrow{width:46px;height:46px;border:0;border-radius:14px;background:#eef2ff;color:#3730a3;font-size:34px;line-height:1;font-weight:700}.date-center{text-align:center}.date-label{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;background:transparent;color:var(--primary);font-weight:900;font-size:16px;padding:7px 10px;border-radius:10px;cursor:pointer}.date-label:active,.date-label:focus-visible{background:#eef2ff;outline:2px solid #818cf8;outline-offset:2px}.calendar-icon{font-size:15px;line-height:1}.date-picker-hidden{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.muted,.small{color:var(--muted);font-size:13px}
+.task{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}.task:last-child{border-bottom:0}.task input{width:22px;height:22px;accent-color:var(--green)}.task.done label{text-decoration:line-through;color:var(--muted)}.task .pts{margin-left:auto;color:#15803d;font-weight:800;font-size:12px}
+.schedule{font-size:10px;background:#eef2ff;color:#4338ca;border-radius:10px;padding:4px 7px;font-weight:800;white-space:nowrap}
+.behaviors{display:grid;grid-template-columns:1fr 1fr;gap:8px}.behavior{border:0;color:#fff;padding:12px;border-radius:12px;font-weight:800}.plus{background:#16a34a}.good{background:#22c55e}.neutral{background:#64748b}.minus{background:#dc2626}
+.reward{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);padding:12px 0}.reward:last-child{border:0}.reward button{margin-left:auto;background:var(--primary);color:white;border:0;border-radius:10px;padding:8px 10px;font-weight:700}.reward button:disabled{background:#cbd5e1;color:#64748b}
+.medals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.medal{text-align:center;padding:11px 5px;border-radius:14px;background:#f8fafc;border:1px solid var(--border);font-size:25px}.medal.locked{filter:grayscale(1);opacity:.45}.medal small{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+.weekrow{display:flex;justify-content:space-between;margin:8px 0 4px}.progress{height:10px;background:#e2e8f0;border-radius:99px;overflow:hidden}.progress div{height:100%;background:var(--primary)}
+input[type=text],input[type=number],select{width:100%;padding:11px;border:1px solid var(--border);border-radius:11px;background:white;font-size:15px}
+input[type=radio]{accent-color:var(--primary)}.form{display:grid;gap:9px}.row{display:grid;grid-template-columns:1fr auto;gap:8px}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button{font-family:inherit;cursor:pointer}.primary{background:var(--primary);color:#fff;border:0;border-radius:11px;padding:11px 14px;font-weight:800}.secondary{background:#e2e8f0;color:#334155;border:0;border-radius:11px;padding:11px 14px;font-weight:700}.danger{background:#fee2e2;color:#991b1b;border:0;border-radius:10px;padding:9px;font-weight:700}.edit{background:#e0e7ff;color:#3730a3;border:0;border-radius:9px;padding:7px 9px;font-weight:800}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.manageTask{display:flex;align-items:center;gap:7px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}.manageTask span{flex:1}.manageTask .schedule{flex:none}.manageTask button{flex:none}
+.manageItem{display:flex;align-items:center;gap:7px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}.manageItem span:first-child{flex:1}.pointsBadge{background:#eef2ff;color:#4338ca;border-radius:9px;padding:4px 7px;font-weight:800}.childManage{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)}.childManage span{flex:1}
+.days{display:flex;gap:6px;flex-wrap:wrap}.dayOption{background:#f1f5f9;border:1px solid var(--border);border-radius:9px;padding:7px 9px;font-size:12px;font-weight:700;color:#475569}.dayOption.selected{background:#e0e7ff;color:#3730a3;border-color:#818cf8}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:8px 0 28px}
+.modal{position:fixed;inset:0;background:#0f172a88;display:none;align-items:flex-end;justify-content:center;z-index:20}.modal.open{display:flex}.modalbox{background:#fff;width:100%;max-width:820px;border-radius:24px 24px 0 0;padding:20px;max-height:90vh;overflow:auto}.modalbox h2{margin-top:0}.close{float:right;border:0;background:#e2e8f0;border-radius:50%;width:34px;height:34px;font-size:18px}
+@media(min-width:700px){.modal{align-items:center}.modalbox{border-radius:22px;width:680px}}
+@media(max-width:480px){.behaviors{grid-template-columns:1fr}.two{grid-template-columns:1fr}.task{flex-wrap:wrap}.task .schedule{margin-left:32px}}
 </style>
 </head>
 <body>
-<header>
-<h1>🏠 Rotina da Família</h1>
-<p>Rotina, missões, comportamento e recompensas</p>
-</header>
-
+<header><h1>🎮 Rotina da Família</h1><p>Pequenas atitudes • grandes conquistas</p></header>
 <main>
-<section id="home" class="card">
-<h2>👨‍👩‍👧‍👦 Crianças</h2>
-<div id="childrenList"></div>
-<div class="empty" id="emptyChildren">
-<div class="emoji">🌱</div>
-<strong>Nenhuma criança cadastrada</strong>
-<p class="muted">Cadastre a primeira criança para começar a usar o programa.</p>
-<button class="primary" type="button" onclick="openChildModal()">＋ Adicionar criança</button>
-</div>
+<section class="card" id="emptyState" style="display:none;text-align:center;padding:28px 18px">
+<div style="font-size:48px;margin-bottom:8px">👨‍👩‍👧‍👦</div>
+<h2 style="margin:0 0 6px">Bem-vindo à Rotina da Família!</h2>
+<p class="muted" style="max-width:520px;margin:0 auto 16px">
+Este aplicativo é novo neste aparelho. Cadastre a primeira criança para começar.
+Os dados ficam salvos neste navegador e são separados dos dados de outras famílias.
+</p>
+<button class="primary" type="button" onclick="openChildModal()">➕ Cadastrar primeira criança</button>
 </section>
+<div class="tabs" id="childTabs"></div>
 
-<section id="childArea" class="hidden">
-<div class="card">
-<div class="row">
-<button class="secondary" type="button" onclick="showHome()">← Crianças</button>
-<button class="secondary" type="button" onclick="openChildModal(currentChildId)">✏️ Editar criança</button>
-</div>
-<h2 id="childName" style="margin-top:14px"></h2>
-<div id="childStats"></div>
-</div>
-
-<div class="card">
-<h2>📋 Missões diárias</h2>
-<div class="date-nav">
-<button class="date-arrow" type="button" onclick="changeDate(-1)">‹</button>
-<div class="date-center">
-<button id="dateLabel" class="date-label" type="button" onclick="openDatePicker()">📅 <span id="dateText"></span></button>
-<input id="datePicker" class="date-picker-hidden" type="date" onchange="setDate(this.value)">
-</div>
-<button class="date-arrow" type="button" onclick="changeDate(1)">›</button>
-</div>
-<div id="missions"></div>
-</div>
-
-<div class="card">
-<h2>⭐ Comportamento</h2>
-<div id="behaviors"></div>
-</div>
-
-<div class="card">
-<h2>🎁 Recompensas</h2>
-<div id="rewards"></div>
-</div>
-
-<div class="card">
-<h2>📜 Histórico recente</h2>
-<details>
-<summary><strong>Mostrar / ocultar histórico</strong></summary>
-<div id="history" style="margin-top:10px"></div>
-</details>
-</div>
+<div id="childContent">
+<section class="card">
+ <div class="hero><div class="avatar" id="avatar">👦</div><div><h2 id="name">Gui</h2><div class="level" id="level">Nível 1</div><div class="muted" id="xpText">0 / 100 XP</div></div><div class="coins">🪙 <span id="coins">0</span></div></div>
+ <div class="xpbar"><div id="xpbar"></div></div>
+ <div class="stats"><div class="stat"><b id="todayPts">0</b><span>pontos hoje</span></div><div class="stat"><b id="todayDone">0%</b><span>missões hoje</span></div><div class="stat"><b id="streak">0</b><span>dias completos</span></div></div>
 </section>
 
 <section class="card">
-<h2>⚙️ Configurações</h2>
-<p class="muted">Os dados são salvos neste navegador. Use o backup para transferir os dados para outro aparelho.</p>
-<div class="row">
-<button class="secondary" type="button" onclick="downloadBackup()">💾 Baixar backup</button>
-<button class="secondary" type="button" onclick="document.getElementById('restoreFile').click()">📥 Restaurar backup</button>
-<input id="restoreFile" class="hidden" type="file" accept=".json,application/json" onchange="restoreBackup(event)">
-</div>
+ <div class="date-nav">
+  <button class="date-arrow" type="button" onclick="changeSelectedDate(-1)" aria-label="Dia anterior">‹</button>
+  <div class="date-center">
+   <button class="date-label" id="selectedDateLabel" type="button" onclick="openDatePicker()" aria-label="Escolher data">
+    <span class="calendar-icon" aria-hidden="true">📅</span><span id="selectedDateText">Hoje</span>
+   </button>
+   <input id="selectedDate" class="date-picker-hidden" type="date" onchange="setSelectedDate(this.value)" aria-label="Escolher data">
+  </div>
+  <button class="date-arrow" type="button" onclick="changeSelectedDate(1)" aria-label="Próximo dia">›</button>
+ </div>
+ <h3 id="missionsTitle">📋 Missões do dia</h3>
+ <div id="tasks"></div>
 </section>
+<section class="card"><h3>😊 Como foi o comportamento?</h3><div class="behaviors" id="behaviors"></div></section>
+<section class="card"><h3>🏆 Medalhas</h3><div class="medals" id="medals"></div></section>
+<section class="card"><h3>🎁 Loja de recompensas</h3><div id="rewards"></div></section>
+<section class="card"><h3>🎯 Meta da semana</h3><div class="weekrow"><span id="weekText"></span><b id="weekPct">0%</b></div><div class="progress"><div id="weekBar"></div></div></section>
+
+</div>
+<section class="card"><details><summary>👨‍👩‍👧 Área dos pais</summary>
+<div class="settings">
+ <h3>👨‍👩‍👧 Crianças</h3><div id="manageChildren"></div>
+<div id="parentEmptyNote" class="muted" style="margin:6px 0 10px"></div>
+ <button class="primary" onclick="openChildModal()">➕ Adicionar criança</button>
+ <hr style="border:0;border-top:1px solid var(--border);width:100%">
+ <h3>📋 Missões</h3>
+ <button class="primary" onclick="if(!child){return alert('Cadastre uma criança primeiro.')}openMissionModal()">➕ Nova missão</button>
+ <div style="margin-top:10px" id="manageTasks"></div>
+ <hr style="border:0;border-top:1px solid var(--border);width:100%">
+ <h3>😊 Gerenciar comportamentos</h3>
+ <button class="primary" onclick="if(!child){return alert('Cadastre uma criança primeiro.')}openBehaviorModal()">➕ Novo comportamento</button>
+ <div id="manageBehaviors" style="margin-top:8px"></div>
+ <hr style="border:0;border-top:1px solid var(--border);width:100%">
+ <h3>🎁 Gerenciar recompensas</h3>
+ <button class="primary" onclick="if(!child){return alert('Cadastre uma criança primeiro.')}openRewardModal()">➕ Nova recompensa</button>
+ <div id="manageRewards" style="margin-top:8px"></div>
+ <hr style="border:0;border-top:1px solid var(--border);width:100%">
+ <h3>☁️ Backup e restauração</h3>
+<div class="muted" style="margin-bottom:8px">O uso diário é salvo automaticamente neste aparelho. O JSON serve para transferência ou segurança.</div>
+ <div class="actions">
+   <button class="primary" onclick="exportBackup()">💾 Baixar backup</button>
+   <button class="secondary" onclick="document.getElementById('backupFile').click()">📥 Restaurar backup</button>
+ </div>
+ <input id="backupFile" type="file" accept=".json,application/json" style="display:none" onchange="importBackup(event)">
+ <div id="backupStatus" class="small" style="margin-top:8px"></div>
+ <div class="card" style="margin:8px 0 0;background:#f8fafc;box-shadow:none">
+   <b>☁️ Google Drive</b>
+   <div class="muted" style="margin-top:4px">A integração automática com o Google Drive será adicionada quando o aplicativo estiver publicado com autenticação Google. Por enquanto, use o arquivo de backup para transferir os dados.</div>
+ </div>
+ <div class="muted" style="margin-top:6px">O backup contém crianças, missões, horários/dias, pontuações, comportamentos, recompensas, XP, moedas e histórico.</div>
+ <hr style="border:0;border-top:1px solid var(--border);width:100%">
+ <h3>⚙️ Configurações</h3>
+ <div class="settingrow"><span>Pontos por missão</span><input id="taskPoints" type="number" min="1" max="20"></div>
+ <div class="settingrow"><span>Meta semanal (%)</span><input id="weeklyGoal" type="number" min="1" max="100"></div>
+ <button class="secondary" onclick="saveSettings()">Salvar configurações</button>
+ <button class="secondary" onclick="restoreDefaults()">Restaurar missões padrão</button>
+ <button class="danger" onclick="clearAll()">Zerar dados deste perfil</button>
+</div></details></section>
+
+<section class="card history-card">
+ <details id="historyDetails">
+  <summary>📜 <b>Histórico recente</b> <span id="historySummary" class="muted"></span></summary>
+  <div id="history" class="muted" style="margin-top:12px"></div>
+ </details>
+</section>
+<footer>V5.3 • Dados locais + backup por arquivo</footer>
 </main>
 
-<div id="modal" class="modal hidden">
-<div class="modalbox">
-<h2 id="modalTitle">Adicionar criança</h2>
-<form id="childForm">
-<input type="hidden" id="editChildId">
-<label>Nome da criança</label>
-<input id="childNameInput" required maxlength="60" placeholder="Ex.: Maria">
-<label>Ícone</label>
-<select id="childIcon">
-<option>👧</option><option>👦</option><option>🧒</option><option>🌟</option>
-</select>
-<div class="row" style="margin-top:16px">
-<button class="secondary" type="button" onclick="closeModal()">Cancelar</button>
-<button class="primary" type="submit">Salvar</button>
-</div>
-</form>
-</div>
-</div>
+<div class="modal" id="missionModal"><div class="modalbox">
+<button class="close" onclick="closeModal('missionModal')">×</button><h2 id="missionModalTitle">➕ Nova missão</h2>
+<div class="form">
+<label>Nome da missão<input id="missionName" type="text" placeholder="Ex.: Arrumar o quarto"></label>
+<label>Pontos / XP<input id="missionPoints" type="number" min="1" max="20" value="1"></label>
+<label>Frequência
+<select id="missionFrequency" onchange="updateDayPicker()">
+<option value="daily">📅 Todos os dias</option>
+<option value="weekdays">🗓️ Segunda a sexta</option>
+<option value="alldays">🗓️ Segunda a domingo</option>
+<option value="selected">📌 Apenas dias selecionados</option>
+</select></label>
+<div id="dayPicker" class="hidden"><b>Selecione os dias:</b><div class="days" id="dayButtons" style="margin-top:7px"></div></div>
+<button class="primary" onclick="saveMission()">Salvar missão</button>
+<button class="secondary" onclick="closeModal('missionModal')">Cancelar</button>
+</div></div></div>
 
-<footer>Rotina da Família • versão sem crianças cadastradas</footer>
+<div class="modal" id="childModal"><div class="modalbox">
+<button class="close" onclick="closeModal('childModal')">×</button><h2 id="childModalTitle">➕ Nova criança</h2>
+<div class="form">
+<label>Nome<input id="childName" type="text" placeholder="Ex.: João"></label>
+<label>Emoji/avatar
+<select id="childAvatar"><option>👦</option><option>👧</option><option>🧒</option><option>👶</option><option>⭐</option><option>🦸</option><option>🦸‍♀️</option></select></label>
+<button class="primary" onclick="saveChild()">Salvar criança</button><button class="secondary" onclick="closeModal('childModal')">Cancelar</button>
+</div></div></div>
+
+<div class="modal" id="behaviorModal"><div class="modalbox">
+<button class="close" onclick="closeModal('behaviorModal')">×</button><h2 id="behaviorModalTitle">➕ Novo comportamento</h2>
+<div class="form"><label>Nome<input id="behaviorName" type="text" placeholder="Ex.: Ajudou alguém"></label>
+<label>Pontuação<input id="behaviorPoints" type="number" min="-50" max="50" value="2"></label>
+<button class="primary" onclick="saveBehaviorConfig()">Salvar comportamento</button><button class="secondary" onclick="closeModal('behaviorModal')">Cancelar</button></div></div></div>
+
+<div class="modal" id="rewardModal"><div class="modalbox">
+<button class="close" onclick="closeModal('rewardModal')">×</button><h2 id="rewardModalTitle">➕ Nova recompensa</h2>
+<div class="form"><label>Nome<input id="rewardName" type="text" placeholder="Ex.: 30 minutos de videogame"></label>
+<label>Custo em moedas<input id="rewardCost" type="number" min="1" max="10000" value="20"></label>
+<button class="primary" onclick="saveRewardConfig()">Salvar recompensa</button><button class="secondary" onclick="closeModal('rewardModal')">Cancelar</button></div></div></div>
 
 <script>
-const STORAGE_KEY='rotinaFamiliaSemCriancasV1';
-
-const DEFAULT_MISSIONS=[
- {id:'m1',name:'Escovar os dentes',points:10,frequency:'daily'},
- {id:'m2',name:'Arrumar a cama',points:10,frequency:'weekdays'},
- {id:'m3',name:'Guardar os brinquedos',points:10,frequency:'daily'},
- {id:'m4',name:'Fazer tarefa escolar',points:10,frequency:'weekdays'},
- {id:'m5',name:'Organizar a mochila',points:10,frequency:'weekdays'},
- {id:'m6',name:'Tomar banho',points:10,frequency:'daily'},
- {id:'m7',name:'Guardar as roupas',points:10,frequency:'daily'}
+const DEFAULT=[
+{name:"Escovar os dentes",points:10,frequency:"daily",days:[0,1,2,3,4,5,6]},
+{name:"Arrumar a cama",points:10,frequency:"weekdays",days:[1,2,3,4,5]},
+{name:"Guardar os brinquedos",points:10,frequency:"daily",days:[0,1,2,3,4,5,6]},
+{name:"Fazer tarefa escolar",points:10,frequency:"weekdays",days:[1,2,3,4,5]},
+{name:"Organizar a mochila",points:10,frequency:"weekdays",days:[1,2,3,4,5]},
+{name:"Tomar banho",points:10,frequency:"daily",days:[0,1,2,3,4,5,6]},
+{name:"Guardar as roupas",points:10,frequency:"daily",days:[0,1,2,3,4,5,6]}
 ];
-
-const DEFAULT_BEHAVIORS=[
- {id:'b1',name:'🌟 Atitude excelente',points:3},
- {id:'b2',name:'👏 Ajudou espontaneamente',points:2},
- {id:'b3',name:'🔔 Precisou de lembrete',points:0},
- {id:'b4',name:'⚠️ Desobedeceu',points:-2}
+const REWARDS=[
+{id:1,name:"🍦 Escolher a sobremesa",cost:20},
+{id:2,name:"🎬 Escolher um filme",cost:50},
+{id:3,name:"🚗 Escolher um passeio",cost:100}
 ];
-
-const DEFAULT_REWARDS=[
- {id:'r1',name:'🍦 Escolher a sobremesa',cost:20},
- {id:'r2',name:'🎬 Escolher um filme',cost:50},
- {id:'r3',name:'🚗 Escolher um passeio',cost:100}
+const MEDALS=[
+['🌱','Primeiro passo',d=>d.totalDone>=1],
+['⭐','10 missões',d=>d.totalDone>=10],
+['🔥','3 dias seguidos',d=>d.streak>=3],
+['🏅','50 missões',d=>d.totalDone>=50],
+['👑','Nível 5',d=>d.level>=5],
+['💎','100 missões',d=>d.totalDone>=100]
 ];
+const DAYNAMES=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+let db=JSON.parse(localStorage.getItem('rotinaFamiliaPWA1')||'null');
+let child='Gui',editingMission=-1,editingChild=null,selectedDate=today();
 
-const DEFAULT_MEDALS=[
- {id:'md1',name:'🌱 Primeiro passo',condition:'Primeira missão concluída'},
- {id:'md2',name:'⭐ 10 missões',condition:'10 missões concluídas'},
- {id:'md3',name:'🔥 3 dias seguidos',condition:'3 dias seguidos com missão'},
- {id:'md4',name:'🏅 50 missões',condition:'50 missões concluídas'},
- {id:'md5',name:'👑 Nível 5',condition:'Alcançar o nível 5'},
- {id:'md6',name:'💎 100 missões',condition:'100 missões concluídas'}
-];
-
-let db=loadDB(), currentChildId=null, selectedDate=today();
-
-function loadDB(){
- try{
-  const raw=localStorage.getItem(STORAGE_KEY);
-  if(raw){
-   const d=JSON.parse(raw);
-   d.children=Array.isArray(d.children)?d.children:[];
-   d.missions=Array.isArray(d.missions)&&d.missions.length?d.missions:DEFAULT_MISSIONS;
-   d.behaviors=Array.isArray(d.behaviors)&&d.behaviors.length?d.behaviors:DEFAULT_BEHAVIORS;
-   d.rewards=Array.isArray(d.rewards)&&d.rewards.length?d.rewards:DEFAULT_REWARDS;
-   d.medals=Array.isArray(d.medals)&&d.medals.length?d.medals:DEFAULT_MEDALS;
-   return d;
-  }
- }catch(e){}
- return {children:[],missions:DEFAULT_MISSIONS,behaviors:DEFAULT_BEHAVIORS,rewards:DEFAULT_REWARDS,medals:DEFAULT_MEDALS};
+function standardProfile(avatar){
+ return {
+  avatar:avatar,
+  behaviors:[
+   {id:1,name:'🌟 Atitude excelente',points:3},
+   {id:2,name:'👏 Ajudou espontaneamente',points:2},
+   {id:3,name:'🔔 Precisou de lembrete',points:0},
+   {id:4,name:'⚠️ Desobedeceu',points:-2}
+  ],
+  tasks:DEFAULT.map(x=>({...x,days:[...x.days]})),
+  taskPoints:10,
+  weeklyGoal:80,
+  xp:0,coins:0,totalDone:0,days:{},history:[],
+  rewards:REWARDS.map(x=>({...x})),
+  redeemed:[]
+ };
 }
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(db));}
+
+function createDefaultDatabase(){ return {children:{}}; }
+
+if(!db || !db.children || Object.keys(db.children).length===0){
+ db=createDefaultDatabase();
+ save();
+}else{
+ migrate();
+}
+
+function migrate(){
+ Object.keys(db.children).forEach(name=>{
+  const x=db.children[name];
+  if(!x.behaviors)x.behaviors=[
+   {id:1,name:'🌟 Atitude excelente',points:3},
+   {id:2,name:'👏 Ajudou espontaneamente',points:2},
+   {id:3,name:'🔔 Precisou de lembrete',points:0},
+   {id:4,name:'⚠️ Desobedeceu',points:-2}
+  ];
+  if(!x.rewards)x.rewards=REWARDS.map(z=>({...z}));
+  if(!x.tasks)x.tasks=DEFAULT.map(t=>({...t,days:[...t.days]}));
+  x.tasks=x.tasks.map(t=>typeof t==='string'
+    ? {name:t,points:10,frequency:'daily',days:[0,1,2,3,4,5,6]}
+    : {...t,points:Number(t.points)||10,days:Array.isArray(t.days)?t.days:[0,1,2,3,4,5,6]}
+  );
+  if(!x.taskPoints)x.taskPoints=10;
+  if(!x.weeklyGoal)x.weeklyGoal=80;
+  if(!x.days)x.days={};
+  if(!x.history)x.history=[];
+  if(!x.redeemed)x.redeemed=[];
+  if(!Number.isFinite(x.xp))x.xp=0;
+  if(!Number.isFinite(x.coins))x.coins=0;
+  if(!Number.isFinite(x.totalDone))x.totalDone=0;
+ });
+ save();
+}
+
+function save(){localStorage.setItem('rotinaFamiliaPWA1',JSON.stringify(db))}
+function p(){let x=db.children[child];if(!x.behaviors)x.behaviors=[{id:1,name:'🌟 Atitude excelente',points:3},{id:2,name:'👏 Ajudou espontaneamente',points:2},{id:3,name:'🔔 Precisou de lembrete',points:0},{id:4,name:'⚠️ Desobedeceu',points:-2}];if(!x.rewards)x.rewards=REWARDS.map(z=>({...z}));return x}
 function today(){return new Date().toISOString().slice(0,10)}
-function fmtDate(d){
- const [y,m,day]=d.split('-');
- return new Date(Date.UTC(+y,+m-1,+day)).toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});
+function dateObj(s=today()){return new Date(s+'T12:00:00')}
+function dateBR(s,withYear=false){return dateObj(s).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',...(withYear?{year:'numeric'}:{})})}
+function dow(s=selectedDate){return dateObj(s).getDay()}
+function activeTask(t){return t.days.includes(dow(selectedDate))}
+function day(key=selectedDate){let x=p().days[key];if(!x)x={done:[],points:0};return x}
+function formatSelectedDate(){
+ const t=today();
+ if(selectedDate===t)return 'Hoje • '+dateBR(selectedDate,true);
+ const y=dateObj(t);y.setDate(y.getDate()-1);const yKey=y.toISOString().slice(0,10);
+ const tom=dateObj(t);tom.setDate(tom.getDate()+1);const tomKey=tom.toISOString().slice(0,10);
+ if(selectedDate===yKey)return 'Ontem • '+dateBR(selectedDate,true);
+ if(selectedDate===tomKey)return 'Amanhã • '+dateBR(selectedDate,true);
+ return dateBR(selectedDate,true);
 }
-function dateObj(s){const [y,m,d]=s.split('-').map(Number);return new Date(Date.UTC(y,m-1,d))}
-function dateShift(s,n){const d=dateObj(s);d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
-function child(){return db.children.find(c=>c.id===currentChildId)}
-function ensureChild(c){
- c.completed=c.completed||{};
- c.behaviorLog=c.behaviorLog||[];
- c.history=c.history||[];
- c.points=c.points||0;c.coins=c.coins||0;c.xp=c.xp||0;
- c.redeemed=c.redeemed||[];
- return c;
+function openDatePicker(){
+ const input=document.getElementById('selectedDate');
+ if(!input)return;
+ try{
+   if(typeof input.showPicker==='function') input.showPicker();
+   else input.click();
+ }catch(e){input.click();}
 }
-function missionsForDate(){
- const day=dateObj(selectedDate).getUTCDay();
- return db.missions.filter(m=>m.frequency==='daily'||(m.frequency==='weekdays'&&day>=1&&day<=5)||(m.frequency==='weekends'&&day===0)||(m.frequency==='sundays'&&day===0));
+function setSelectedDate(value){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return;
+ selectedDate=value;render();
+}
+function changeSelectedDate(delta){
+ const d=dateObj(selectedDate);d.setDate(d.getDate()+delta);selectedDate=d.toISOString().slice(0,10);render();
+}
+
+function levelInfo(){let x=p(),level=Math.floor(x.xp/100)+1;return {level,into:x.xp%100}}
+function frequencyLabel(t){
+ if(t.frequency==='daily')return 'Todos os dias';
+ if(t.frequency==='weekdays')return 'Seg–Sex';
+ if(t.frequency==='alldays')return 'Seg–Dom';
+ return t.days.map(x=>DAYNAMES[x]).join(' • ');
+}
+function renderTabs(){
+ let names=Object.keys(db.children);
+ document.getElementById('childTabs').innerHTML=names.map(n=>`<button class="tab ${n===child?'active':''}" onclick="selectChild('${escAttr(n)}',this)">${esc(db.children[n].avatar)} ${esc(n)}</button>`).join('');
 }
 function render(){
- renderHome();
- if(currentChildId && child()) renderChild();
+ const names=Object.keys(db.children||{});
+ const empty=document.getElementById('emptyState');
+ const content=document.getElementById('childContent');
+ const tabs=document.getElementById('childTabs');
+ const parentNote=document.getElementById('parentEmptyNote');
+ if(!names.length){
+   child=null;
+   empty.style.display='block';
+   content.style.display='none';
+   tabs.innerHTML='';
+   if(parentNote)parentNote.textContent='Nenhuma criança cadastrada. Adicione uma para liberar as funções da rotina.';
+   renderChildren();
+   renderManageTasksEmpty();
+   renderManageBehaviorsEmpty();
+   renderManageRewardsEmpty();
+   return;
+ }
+ if(!db.children[child]) child=names[0];
+ empty.style.display='none';
+ content.style.display='block';
+ renderTabs();
+ let x=p(),li=levelInfo();
+ document.getElementById('avatar').textContent=x.avatar;
+ document.getElementById('name').textContent=child;
+ document.getElementById('level').textContent='Nível '+li.level;
+ document.getElementById('xpText').textContent=`${li.into} / 100 XP`;
+ document.getElementById('xpbar').style.width=li.percent+'%';
+ document.getElementById('coins').textContent=x.coins;
+ let d=day();
+ document.getElementById('todayPts').textContent=d.points;
+ let active=activeTasks(),done=d.done.filter(i=>x.tasks[i]&&active.some(a=>a.index===i)).length;
+ document.getElementById('todayDone').textContent=(active.length?Math.round(done/active.length*100):0)+'%';
+ document.getElementById('selectedDate').value=selectedDate;
+ document.getElementById('selectedDateText').textContent=formatSelectedDate();
+ document.getElementById('missionsTitle').textContent=selectedDate===today()?'📋 Missões de hoje':'📋 Missões de '+dateBR(selectedDate,true);
+ renderTasks();renderBehaviors();renderMedals();renderRewards();renderWeek();renderManageTasks();renderChildren();renderManageBehaviors();renderManageRewards();renderHistory();
+ if(parentNote)parentNote.textContent='';
 }
-function renderHome(){
- const list=document.getElementById('childrenList'), empty=document.getElementById('emptyChildren');
- list.innerHTML='';
- if(!db.children.length){empty.classList.remove('hidden');return}
- empty.classList.add('hidden');
- db.children.forEach(c=>{
-  const div=document.createElement('div');div.className='item';
-  div.innerHTML=`<div><strong>${esc(c.icon||'🧒')} ${esc(c.name)}</strong><br><small>${c.points||0} pontos • ${c.coins||0} moedas</small></div><button class="primary" type="button">Abrir</button>`;
-  div.querySelector('button').onclick=()=>openChild(c.id);
-  list.appendChild(div);
- });
+function renderBehaviors(){
+ let x=p(),el=document.getElementById('behaviors');
+ el.innerHTML=x.behaviors.length?x.behaviors.map(b=>{
+  let cls=b.points>0?'plus':b.points<0?'minus':'neutral';
+  return `<button class="behavior ${cls}" onclick="behavior(${Number(b.points)},'${escAttr(b.name)}')">${esc(b.name)} ${b.points>0?'+':''}${b.points}</button>`;
+ }).join(''):'<div class="muted">Nenhum comportamento cadastrado.</div>';
 }
-function openChild(id){currentChildId=id;ensureChild(child());document.getElementById('home').classList.add('hidden');document.getElementById('childArea').classList.remove('hidden');renderChild()}
-function showHome(){currentChildId=null;document.getElementById('childArea').classList.add('hidden');document.getElementById('home').classList.remove('hidden');renderHome()}
-function renderChild(){
- const c=ensureChild(child());
- document.getElementById('childName').textContent=(c.icon||'🧒')+' '+c.name;
- document.getElementById('childStats').innerHTML=`<span class="badge">⭐ ${c.points||0} pontos</span> <span class="badge">🪙 ${c.coins||0} moedas</span> <span class="badge">🏆 Nível ${Math.floor((c.xp||0)/100)+1}</span>`;
- document.getElementById('dateText').textContent=fmtDate(selectedDate);
- document.getElementById('datePicker').value=selectedDate;
- renderMissions(c);renderBehaviors(c);renderRewards(c);renderHistory(c);
+function renderManageBehaviors(){
+ let x=p(),el=document.getElementById('manageBehaviors');
+ el.innerHTML=x.behaviors.map((b,i)=>`<div class="manageItem"><span>${esc(b.name)}</span><span class="pointsBadge">${b.points>0?'+':''}${b.points} pts</span><button class="edit" onclick="openBehaviorModal(${i})">Editar</button><button class="danger" onclick="deleteBehavior(${i})">Excluir</button></div>`).join('');
 }
-function renderMissions(c){
- const box=document.getElementById('missions');box.innerHTML='';
- const list=missionsForDate();
- if(!list.length){box.innerHTML='<p class="muted">Nenhuma missão programada para este dia.</p>';return}
- list.forEach(m=>{
-  const key=selectedDate+'|'+m.id, done=!!c.completed[key];
-  const div=document.createElement('label');div.className='mission'+(done?' done':'');
-  div.innerHTML=`<input type="checkbox" ${done?'checked':''}> <span><strong>${esc(m.name)}</strong><br><small>+${m.points} pontos</small></span>`;
-  div.querySelector('input').onchange=e=>toggleMission(m,e.target.checked);
-  box.appendChild(div);
- });
+function renderManageRewards(){
+ let x=p(),el=document.getElementById('manageRewards');
+ el.innerHTML=x.rewards.map((r,i)=>`<div class="manageItem"><span>${esc(r.name)}</span><span class="pointsBadge">🪙 ${r.cost}</span><button class="edit" onclick="openRewardModal(${i})">Editar</button><button class="danger" onclick="deleteReward(${i})">Excluir</button></div>`).join('');
 }
-function toggleMission(m,done){
- const c=ensureChild(child()),key=selectedDate+'|'+m.id;
- if(done && !c.completed[key]){c.completed[key]=true;c.points+=m.points;c.coins+=m.points;c.xp+=m.points;c.history.unshift({date:selectedDate,text:'Missão: '+m.name,points:m.points})}
- if(!done && c.completed[key]){delete c.completed[key];c.points-=m.points;c.coins-=m.points;c.xp=Math.max(0,c.xp-m.points);c.history.unshift({date:selectedDate,text:'Missão desmarcada: '+m.name,points:-m.points})}
- save();renderChild();
+function openBehaviorModal(i=-1){
+ window.editingBehavior=i;
+ document.getElementById('behaviorModalTitle').textContent=i<0?'➕ Novo comportamento':'✏️ Editar comportamento';
+ let b=i<0?{name:'',points:1}:p().behaviors[i];
+ document.getElementById('behaviorName').value=b.name;document.getElementById('behaviorPoints').value=b.points;
+ document.getElementById('behaviorModal').classList.add('open');
 }
-function renderBehaviors(c){
- const box=document.getElementById('behaviors');box.innerHTML='';
- db.behaviors.forEach(b=>{
-  const div=document.createElement('div');div.className='item';
-  div.innerHTML=`<div><strong>${esc(b.name)}</strong><br><small>${b.points>=0?'+':''}${b.points} pontos</small></div><button class="secondary" type="button">Registrar</button>`;
-  div.querySelector('button').onclick=()=>registerBehavior(b);
-  box.appendChild(div);
- });
+function saveBehaviorConfig(){
+ let name=document.getElementById('behaviorName').value.trim(),points=Number(document.getElementById('behaviorPoints').value);
+ if(!name)return alert('Digite o nome do comportamento.');
+ if(!Number.isFinite(points))return alert('Informe uma pontuação válida.');
+ let i=window.editingBehavior;
+ if(i<0)p().behaviors.push({id:Date.now(),name,points});else p().behaviors[i]={...p().behaviors[i],name,points};
+ save();closeModal('behaviorModal');render();
 }
-function registerBehavior(b){
- const c=ensureChild(child());c.points+=b.points;c.coins=Math.max(0,c.coins+b.points);c.xp=Math.max(0,c.xp+b.points);
- c.behaviorLog.unshift({date:selectedDate,name:b.name,points:b.points});c.history.unshift({date:selectedDate,text:'Comportamento: '+b.name,points:b.points});
- save();renderChild();
+function deleteBehavior(i){let b=p().behaviors[i];if(!confirm(`Excluir o comportamento "${b.name}"?`))return;p().behaviors.splice(i,1);save();render()}
+function openRewardModal(i=-1){
+ window.editingReward=i;
+ document.getElementById('rewardModalTitle').textContent=i<0?'➕ Nova recompensa':'✏️ Editar recompensa';
+ let r=i<0?{name:'',cost:20}:p().rewards[i];
+ document.getElementById('rewardName').value=r.name;document.getElementById('rewardCost').value=r.cost;
+ document.getElementById('rewardModal').classList.add('open');
 }
-function renderRewards(c){
- const box=document.getElementById('rewards');box.innerHTML='';
- db.rewards.forEach(r=>{
-  const div=document.createElement('div');div.className='item';
-  div.innerHTML=`<div><strong>${esc(r.name)}</strong><br><small>🪙 ${r.cost} moedas</small></div><button class="secondary" type="button" ${c.coins<r.cost?'disabled':''}>Resgatar</button>`;
-  const btn=div.querySelector('button');btn.onclick=()=>redeemReward(r);
-  box.appendChild(div);
- });
+function saveRewardConfig(){
+ let name=document.getElementById('rewardName').value.trim(),cost=Math.max(1,Math.min(10000,Number(document.getElementById('rewardCost').value)||1));
+ if(!name)return alert('Digite o nome da recompensa.');
+ let i=window.editingReward;
+ if(i<0)p().rewards.push({id:Date.now(),name,cost});else p().rewards[i]={...p().rewards[i],name,cost};
+ save();closeModal('rewardModal');render();
 }
-function redeemReward(r){
- const c=ensureChild(child());if(c.coins<r.cost)return;
- if(!confirm('Resgatar '+r.name+' por '+r.cost+' moedas?'))return;
- c.coins-=r.cost;c.redeemed.unshift({date:selectedDate,name:r.name,cost:r.cost});c.history.unshift({date:selectedDate,text:'Recompensa: '+r.name,points:0});save();renderChild();
+function deleteReward(i){let r=p().rewards[i];if(!confirm(`Excluir a recompensa "${r.name}"?`))return;p().rewards.splice(i,1);save();render()}
+
+function exportBackup(){
+ const payload={
+   app:"Rotina da Família",
+   version:5,
+   exportedAt:new Date().toISOString(),
+   data:db
+ };
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ const stamp=new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
+ a.href=url;a.download=`rotina-familia-backup-${stamp}.json`;
+ document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+ showBackupStatus("✅ Backup baixado com sucesso.");
 }
-function renderHistory(c){
- const box=document.getElementById('history');box.innerHTML='';
- const h=(c.history||[]).slice(0,30);
- if(!h.length){box.innerHTML='<p class="muted">Nenhum registro ainda.</p>';return}
- h.forEach(x=>{const div=document.createElement('div');div.className='item';div.innerHTML=`<div><strong>${esc(x.text)}</strong><br><small>${fmtDate(x.date)}</small></div><span class="badge">${x.points>0?'+':''}${x.points||0}</span>`;box.appendChild(div)})
+function importBackup(event){
+ const file=event.target.files&&event.target.files[0];
+ if(!file)return;
+ const reader=new FileReader();
+ reader.onload=function(){
+   try{
+     const payload=JSON.parse(reader.result);
+     const incoming=payload&&payload.data?payload.data:payload;
+     if(!incoming||!incoming.children||typeof incoming.children!=="object")throw new Error("Formato inválido");
+     if(!confirm("Restaurar este backup vai substituir os dados atuais neste navegador. Deseja continuar?"))return;
+     db=incoming;
+     Object.keys(db.children).forEach(n=>{
+       const x=db.children[n];
+       if(!x.behaviors)x.behaviors=[
+         {id:1,name:"🌟 Atitude excelente",points:3},
+         {id:2,name:"👏 Ajudou espontaneamente",points:2},
+         {id:3,name:"🔔 Precisou de lembrete",points:0},
+         {id:4,name:"⚠️ Desobedeceu",points:-2}
+       ];
+       if(!x.rewards)x.rewards=REWARDS.map(z=>({...z}));
+       if(!Array.isArray(x.tasks))x.tasks=[];
+       x.tasks=x.tasks.map(t=>typeof t==="string"?{name:t,points:x.taskPoints||1,frequency:"daily",days:[0,1,2,3,4,5,6]}:t);
+       if(!x.days)x.days={};
+       if(!x.history)x.history=[];
+     });
+     if(!db.children[child])child=Object.keys(db.children)[0];
+     save();render();showBackupStatus("✅ Backup restaurado com sucesso.");
+   }catch(e){
+     alert("Não foi possível restaurar o backup. Verifique se o arquivo é da Rotina da Família.");
+     showBackupStatus("❌ Arquivo de backup inválido.");
+   }finally{
+     event.target.value="";
+   }
+ };
+ reader.readAsText(file);
 }
-function changeDate(n){selectedDate=dateShift(selectedDate,n);renderChild()}
-function setDate(v){if(/^\\d{4}-\\d{2}-\\d{2}$/.test(v)){selectedDate=v;renderChild()}}
-function openDatePicker(){const el=document.getElementById('datePicker');try{el.showPicker()}catch(e){el.click()}}
-function openChildModal(id=null){
- document.getElementById('modal').classList.remove('hidden');document.getElementById('editChildId').value=id||'';
- document.getElementById('modalTitle').textContent=id?'Editar criança':'Adicionar criança';
- if(id){const c=db.children.find(x=>x.id===id);document.getElementById('childNameInput').value=c.name;document.getElementById('childIcon').value=c.icon||'🧒'}
- else{document.getElementById('childForm').reset();document.getElementById('childIcon').value='👧'}
- document.getElementById('childNameInput').focus();
+function showBackupStatus(text){
+ const el=document.getElementById("backupStatus");
+ if(el)el.textContent=text+" "+new Date().toLocaleString("pt-BR");
 }
-function closeModal(){document.getElementById('modal').classList.add('hidden')}
-document.getElementById('childForm').onsubmit=e=>{
- e.preventDefault();const id=document.getElementById('editChildId').value,name=document.getElementById('childNameInput').value.trim(),icon=document.getElementById('childIcon').value;
- if(!name)return;
- if(id){const c=db.children.find(x=>x.id===id);c.name=name;c.icon=icon}else{db.children.push(ensureChild({id:'c_'+Date.now(),name,icon,points:0,coins:0,xp:0,completed:{},history:[],behaviorLog:[],redeemed:[]}))}
- save();closeModal();render();if(!currentChildId)openChild(db.children[db.children.length-1].id);
-};
-function downloadBackup(){
- const data={version:1,exportedAt:new Date().toISOString(),...db};
- const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');
- a.href=URL.createObjectURL(blob);a.download='backup_rotina_familia.json';a.click();URL.revokeObjectURL(a.href);
+function renderWeek(){
+ let x=p(),done=0,total=0;
+ for(let k=6;k>=0;k--){let dt=new Date();dt.setDate(dt.getDate()-k);let key=dt.toISOString().slice(0,10),d=x.days[key];let dayNum=dt.getDay();let n=x.tasks.filter(t=>t.days.includes(dayNum)).length;if(d){total+=n;done+=d.done.filter(i=>x.tasks[i]&&x.tasks[i].days.includes(dayNum)).length}}
+ let pct=total?Math.round(done/total*100):0;document.getElementById('weekText').textContent=`${done}/${total} missões concluídas`;document.getElementById('weekPct').textContent=pct+'%';document.getElementById('weekBar').style.width=Math.min(100,pct)+'%';
+ let streak=0;for(let i=0;i<30;i++){let dt=new Date();dt.setDate(dt.getDate()-i);let key=dt.toISOString().slice(0,10),d=x.days[key],n=x.tasks.filter(t=>t.days.includes(dt.getDay())).length;if(n&&d&&d.done.filter(z=>x.tasks[z]&&x.tasks[z].days.includes(dt.getDay())).length>=n)streak++;else break}x.streak=streak;document.getElementById('streak').textContent=streak;
 }
-function restoreBackup(ev){
- const file=ev.target.files[0];if(!file)return;
- const reader=new FileReader();reader.onload=()=>{
-  try{const d=JSON.parse(reader.result);if(!Array.isArray(d.children))throw Error();
-   db={children:d.children,missions:d.missions?.length?d.missions:DEFAULT_MISSIONS,behaviors:d.behaviors?.length?d.behaviors:DEFAULT_BEHAVIORS,rewards:d.rewards?.length?d.rewards:DEFAULT_REWARDS,medals:d.medals?.length?d.medals:DEFAULT_MEDALS};
-   db.children.forEach(ensureChild);save();currentChildId=null;render();alert('Backup restaurado com sucesso.');
-  }catch(e){alert('Arquivo de backup inválido.')}
- };reader.readAsText(file);ev.target.value='';
+function renderMedals(){let x=p(),li=levelInfo(),d={...x,level:li.level};document.getElementById('medals').innerHTML=MEDALS.map(m=>`<div class="medal ${m[2](d)?'':'locked'}">${m[0]}<small>${m[1]}</small></div>`).join('')}
+function renderRewards(){let x=p();document.getElementById('rewards').innerHTML=x.rewards.map(r=>`<div class="reward"><span>${esc(r.name)}</span><b>🪙 ${r.cost}</b><button ${x.coins<r.cost?'disabled':''} onclick="redeem(${r.id})">Trocar</button></div>`).join('')}
+function redeem(id){let x=p(),r=x.rewards.find(z=>z.id===id);if(!r||x.coins<r.cost)return;x.coins-=r.cost;x.redeemed.unshift({date:today(),reward:r.name,cost:r.cost});x.history.unshift({date:today(),text:'Resgatou: '+r.name,delta:-r.cost});save();render();alert('🎉 Recompensa resgatada!')}
+function renderManageTasksEmpty(){
+ const el=document.getElementById('manageTasks');
+ if(el)el.innerHTML='<div class="muted">Cadastre uma criança para configurar as missões.</div>';
 }
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderManageBehaviorsEmpty(){
+ const el=document.getElementById('manageBehaviors');
+ if(el)el.innerHTML='<div class="muted">Cadastre uma criança para configurar os comportamentos.</div>';
+}
+function renderManageRewardsEmpty(){
+ const el=document.getElementById('manageRewards');
+ if(el)el.innerHTML='<div class="muted">Cadastre uma criança para configurar as recompensas.</div>';
+}
+function renderManageTasks(){
+ let x=p();document.getElementById('manageTasks').innerHTML=x.tasks.length?x.tasks.map((t,i)=>`<div class="manageTask"><span>${i+1}. ${esc(t.name)}</span><span class="schedule">${frequencyLabel(t)}</span><button class="edit" onclick="openMissionModal(${i})">Editar</button><button class="danger" onclick="deleteTask(${i})">Excluir</button></div>`).join(''):'<div class="muted">Nenhuma missão cadastrada.</div>';
+}
+function renderChildren(){
+ let names=Object.keys(db.children);document.getElementById('manageChildren').innerHTML=names.map(n=>`<div class="childManage"><span>${db.children[n].avatar} <b>${esc(n)}</b></span><button class="edit" onclick="openChildModal('${escAttr(n)}')">Editar</button>${names.length>1?`<button class="danger" onclick="deleteChild('${escAttr(n)}')">Excluir</button>`:''}</div>`).join('');
+}
+function renderHistory(){
+ let all=p().history||[],h=all.slice(0,15);
+ document.getElementById('historySummary').textContent=all.length?`• ${all.length} ${all.length===1?'registro':'registros'} • toque para expandir/recolher`:'• nenhum registro';
+ document.getElementById('history').innerHTML=h.length?h.map(z=>`<div style="padding:7px 0;border-bottom:1px solid var(--border)"><b>${dateBR(z.date)}</b> — ${esc(z.text)} <strong>${z.delta>0?'+'+z.delta:z.delta}</strong></div>`).join(''):'Nenhum lançamento ainda.';
+}
+function openMissionModal(i=-1){
+ editingMission=i;document.getElementById('missionModalTitle').textContent=i<0?'➕ Nova missão':'✏️ Editar missão';
+ let t=i<0?{name:'',points:10,frequency:'daily',days:[0,1,2,3,4,5,6]}:p().tasks[i];
+ document.getElementById('missionName').value=t.name;document.getElementById('missionPoints').value=t.points;document.getElementById('missionFrequency').value=t.frequency;window.selectedDays=[...t.days];updateDayPicker();document.getElementById('missionModal').classList.add('open');
+}
+function updateDayPicker(){
+ let f=document.getElementById('missionFrequency').value;
+ if(f==='selected'){document.getElementById('dayPicker').classList.remove('hidden');renderDayButtons()}
+ else document.getElementById('dayPicker').classList.add('hidden');
+}
+function renderDayButtons(){let sel=window.selectedDays||[];document.getElementById('dayButtons').innerHTML=DAYNAMES.map((d,i)=>`<button type="button" class="dayOption ${sel.includes(i)?'selected':''}" onclick="toggleDay(${i})">${d}</button>`).join('')}
+function toggleDay(i){window.selectedDays=window.selectedDays||[];if(window.selectedDays.includes(i))window.selectedDays=window.selectedDays.filter(x=>x!==i);else window.selectedDays.push(i);renderDayButtons()}
+function saveMission(){
+ let name=document.getElementById('missionName').value.trim(),points=Math.max(1,Math.min(20,Number(document.getElementById('missionPoints').value)||1)),f=document.getElementById('missionFrequency').value;
+ if(!name)return alert('Digite o nome da missão.');
+ let days=f==='daily'?[0,1,2,3,4,5,6]:f==='weekdays'?[1,2,3,4,5]:f==='alldays'?[0,1,2,3,4,5,6]:[...(window.selectedDays||[])];
+ if(f==='selected'&&!days.length)return alert('Selecione pelo menos um dia.');
+ let t={name,points,frequency:f,days};if(editingMission<0)p().tasks.push(t);else p().tasks[editingMission]=t;save();closeModal('missionModal');render();
+}
+function deleteTask(i){let x=p(),name=x.tasks[i].name;if(!confirm(`Excluir a missão "${name}"?`))return;x.tasks.splice(i,1);for(const key of Object.keys(x.days)){if(x.days[key]&&Array.isArray(x.days[key].done))x.days[key].done=x.days[key].done.filter(z=>z!==i).map(z=>z>i?z-1:z)}save();render()}
+function openChildModal(name=null){
+ editingChild=name;document.getElementById('childModalTitle').textContent=name?'✏️ Editar criança':'➕ Nova criança';
+ let x=name?db.children[name]:{avatar:'🧒'};document.getElementById('childName').value=name||'';document.getElementById('childAvatar').value=x.avatar||'🧒';document.getElementById('childModal').classList.add('open');
+}
+function saveChild(){
+ let name=document.getElementById('childName').value.trim(),avatar=document.getElementById('childAvatar').value;if(!name)return alert('Digite o nome da criança.');
+ if(editingChild){
+  if(name!==editingChild&&db.children[name])return alert('Já existe uma criança com esse nome.');
+  if(name!==editingChild){db.children[name]=db.children[editingChild];delete db.children[editingChild];if(child===editingChild)child=name}
+  db.children[name].avatar=avatar;
+ }else{
+  if(db.children[name])return alert('Já existe uma criança com esse nome.');
+  let x=profile();x.avatar=avatar;db.children[name]=x;child=name;
+ }
+ save();closeModal('childModal');render();
+}
+function deleteChild(name){let names=Object.keys(db.children);if(names.length<=1)return alert('É necessário manter pelo menos uma criança.');if(!confirm(`Excluir o perfil de ${name} e todos os seus dados?`))return;delete db.children[name];if(child===name)child=Object.keys(db.children)[0];save();render()}
+function saveSettings(){let x=p();x.taskPoints=Math.max(1,Math.min(20,Number(document.getElementById('taskPoints').value)||1));x.weeklyGoal=Math.max(1,Math.min(100,Number(document.getElementById('weeklyGoal').value)||80));save();render()}
+function restoreDefaults(){if(confirm('Restaurar as missões padrão?')){p().tasks=DEFAULT.map(x=>({...x,days:[...x.days]}));p().taskPoints=10;save();render()}}
+function clearAll(){if(confirm('Zerar pontuação, histórico e progresso deste perfil?')){let old=p(),fresh=profile();fresh.avatar=old.avatar;fresh.tasks=old.tasks;fresh.taskPoints=old.taskPoints;fresh.weeklyGoal=old.weeklyGoal;db.children[child]=fresh;save();render()}}
+function selectChild(n,b){child=n;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');render()}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function escAttr(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 render();
 </script>
 
 <script>
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('./service-worker.js')
-      .catch(function () { /* O app continua funcionando mesmo sem SW. */ });
-  });
+ window.addEventListener('load', function(){
+  navigator.serviceWorker.register('./service-worker.js').catch(function(){});
+ });
 }
 </script>
 

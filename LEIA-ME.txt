@@ -1,14 +1,19 @@
-# Rotina da Família — PWA
+ROTINA DA FAMÍLIA — PWA DE TESTE
 
-Arquivos:
-- index.html — aplicativo
-- manifest.json — configuração de instalação como app
-- service-worker.js — cache/offline
-- icon-192.png / icon-512.png — ícones
+Versão sem login, preparada para testes com amigos.
 
-## Como publicar
-Hospede esta pasta em um serviço que forneça HTTPS (por exemplo, GitHub Pages ou Cloudflare Pages).
-Depois abra a URL no celular e use a opção do navegador para "Adicionar à tela inicial" / "Instalar aplicativo".
+- Cada aparelho/navegador mantém seus próprios dados.
+- Nenhuma criança é cadastrada inicialmente.
+- O usuário cadastra a primeira criança.
+- Missões, comportamentos, recompensas, medalhas e histórico.
+- Navegação por data e histórico recolhível.
+- Backup/restauração JSON.
+- Instalação como PWA.
+- Cache para funcionamento offline após o primeiro acesso.
 
-## Dados
-Os dados das crianças são salvos localmente no navegador. O JSON continua sendo um backup manual para transferência entre aparelhos.
+Publicação:
+1. Envie todos os arquivos para a raiz do repositório GitHub.
+2. Ative GitHub Pages: Settings > Pages > Deploy from a branch > main > /(root).
+3. Abra a URL no celular e escolha Instalar aplicativo / Adicionar à tela inicial.
+
+Importante: os dados não ficam no GitHub. Para sincronizar uma família em vários celulares será necessária uma futura versão com nuvem/login.

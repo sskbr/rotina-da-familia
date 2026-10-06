@@ -3,12 +3,11 @@
   "short_name": "Rotina Família",
   "description": "Rotina, missões, comportamento e recompensas da família.",
   "lang": "pt-BR",
-  "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f5f3ff",
-  "theme_color": "#6d28d9",
+  "background_color": "#f5f7fb",
+  "theme_color": "#4f46e5",
   "orientation": "portrait-primary",
   "icons": [
     {
