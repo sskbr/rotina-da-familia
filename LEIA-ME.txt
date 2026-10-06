@@ -1,18 +1,10 @@
-ROTINA DA FAMÍLIA — PWA DE TESTE v2
+ROTINA DA FAMÍLIA — PWA CORRIGIDO
 
-Esta versão mantém o Controle dos Pais visível e inclui:
-- adicionar, editar e excluir crianças;
-- adicionar, editar e excluir missões;
-- pontos/XP das missões;
-- frequência: todos os dias, segunda a sexta, segunda a domingo ou dias selecionados;
-- seleção individual de dias;
-- navegação por data nas missões;
-- adicionar, editar, excluir e pontuar comportamentos;
-- adicionar, editar, excluir e definir custo de recompensas;
-- medalhas, níveis, moedas e histórico;
-- histórico recolhível;
-- backup/restauração JSON;
-- PWA e funcionamento offline após o primeiro acesso;
-- sem login: cada aparelho/navegador possui seus próprios dados.
+Correções:
+- cadastro da primeira criança corrigido;
+- salvar missão, comportamento e recompensa corrigido;
+- aplicativo não quebra quando inicia sem crianças;
+- ações que dependem de criança agora mostram aviso;
+- Service Worker atualizado para evitar cache da versão quebrada.
 
-Para atualizar o GitHub Pages, substitua os arquivos atuais pelos arquivos deste pacote.
+No GitHub Pages, substitua os arquivos atuais pelos arquivos deste pacote.

@@ -11,7 +11,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Rotina da Família — PWA Teste v2</title>
+<title>Rotina da Família — PWA Teste v3 — corrigido</title>
 <style>
 :root{--primary:#4f46e5;--secondary:#7c3aed;--green:#16a34a;--red:#dc2626;--gold:#f59e0b;--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#64748b;--border:#e2e8f0}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
@@ -244,13 +244,13 @@ function migrate(){
 }
 
 function save(){localStorage.setItem('rotinaFamiliaPWA1',JSON.stringify(db))}
-function p(){let x=db.children[child];if(!x.behaviors)x.behaviors=[{id:1,name:'🌟 Atitude excelente',points:3},{id:2,name:'👏 Ajudou espontaneamente',points:2},{id:3,name:'🔔 Precisou de lembrete',points:0},{id:4,name:'⚠️ Desobedeceu',points:-2}];if(!x.rewards)x.rewards=REWARDS.map(z=>({...z}));return x}
+function p(){let x=db.children[child];if(!x)return null;if(!x.behaviors)x.behaviors=[{id:1,name:'🌟 Atitude excelente',points:3},{id:2,name:'👏 Ajudou espontaneamente',points:2},{id:3,name:'🔔 Precisou de lembrete',points:0},{id:4,name:'⚠️ Desobedeceu',points:-2}];if(!x.rewards)x.rewards=REWARDS.map(z=>({...z}));return x}
 function today(){return new Date().toISOString().slice(0,10)}
 function dateObj(s=today()){return new Date(s+'T12:00:00')}
 function dateBR(s,withYear=false){return dateObj(s).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',...(withYear?{year:'numeric'}:{})})}
 function dow(s=selectedDate){return dateObj(s).getDay()}
 function activeTask(t){return t.days.includes(dow(selectedDate))}
-function day(key=selectedDate){let x=p().days[key];if(!x)x={done:[],points:0};return x}
+function day(key=selectedDate){let x=p();if(!x)return {done:[],points:0};if(!x.days[key])x.days[key]={done:[],points:0};return x.days[key]}
 function formatSelectedDate(){
  const t=today();
  if(selectedDate===t)return 'Hoje • '+dateBR(selectedDate,true);
@@ -288,7 +288,38 @@ function renderTabs(){
  document.getElementById('childTabs').innerHTML=names.map(n=>`<button class="tab ${n===child?'active':''}" onclick="selectChild('${escAttr(n)}',this)">${esc(db.children[n].avatar)} ${esc(n)}</button>`).join('');
 }
 function render(){
- renderTabs();renderBehaviors();
+ renderTabs();
+ if(!Object.keys(db.children).length){
+  document.getElementById('avatar').textContent='👨‍👩‍👧';
+  document.getElementById('name').textContent='Nenhuma criança cadastrada';
+  document.getElementById('level').textContent='Cadastre a primeira criança';
+  document.getElementById('xpText').textContent='0 / 100 XP';
+  document.getElementById('xpbar').style.width='0%';
+  document.getElementById('coins').textContent='0';
+  document.getElementById('todayPts').textContent='0';
+  document.getElementById('todayDone').textContent='0%';
+  document.getElementById('streak').textContent='0';
+  document.getElementById('selectedDate').value=selectedDate;
+  document.getElementById('selectedDateText').textContent=formatSelectedDate();
+  document.getElementById('missionsTitle').textContent='📋 Cadastre uma criança para começar';
+  document.getElementById('tasks').innerHTML='<div class="muted">Use “➕ Adicionar criança” no Controle dos pais.</div>';
+  document.getElementById('behaviors').innerHTML='<div class="muted">Cadastre uma criança para configurar comportamentos.</div>';
+  document.getElementById('medals').innerHTML='<div class="muted">Cadastre uma criança para ver as medalhas.</div>';
+  document.getElementById('rewards').innerHTML='<div class="muted">Cadastre uma criança para configurar recompensas.</div>';
+  document.getElementById('weekText').textContent='0/0 missões concluídas';
+  document.getElementById('weekPct').textContent='0%';
+  document.getElementById('weekBar').style.width='0%';
+  document.getElementById('historySummary').textContent='• nenhum registro';
+  document.getElementById('history').innerHTML='Nenhum lançamento ainda.';
+  document.getElementById('manageChildren').innerHTML='<div class="muted">Nenhuma criança cadastrada.</div>';
+  document.getElementById('manageTasks').innerHTML='<div class="muted">Cadastre uma criança para adicionar missões.</div>';
+  document.getElementById('manageBehaviors').innerHTML='<div class="muted">Cadastre uma criança para adicionar comportamentos.</div>';
+  document.getElementById('manageRewards').innerHTML='<div class="muted">Cadastre uma criança para adicionar recompensas.</div>';
+  document.getElementById('taskPoints').value='';
+  document.getElementById('weeklyGoal').value='';
+  return;
+ }
+ renderBehaviors();
  let x=p(),d=day(),li=levelInfo();
  document.getElementById('avatar').textContent=x.avatar;document.getElementById('name').textContent=child;
  document.getElementById('level').textContent='Nível '+li.level;document.getElementById('xpText').textContent=`${li.into} / 100 XP`;document.getElementById('xpbar').style.width=li.into+'%';document.getElementById('coins').textContent=x.coins;document.getElementById('todayPts').textContent=d.points;
@@ -323,14 +354,14 @@ function renderManageRewards(){
  let x=p(),el=document.getElementById('manageRewards');
  el.innerHTML=x.rewards.map((r,i)=>`<div class="manageItem"><span>${esc(r.name)}</span><span class="pointsBadge">🪙 ${r.cost}</span><button class="edit" onclick="openRewardModal(${i})">Editar</button><button class="danger" onclick="deleteReward(${i})">Excluir</button></div>`).join('');
 }
-function openBehaviorModal(i=-1){
+function openBehaviorModal(i=-1){if(!p()){alert('Cadastre uma criança primeiro.');return;}
  window.editingBehavior=i;
  document.getElementById('behaviorModalTitle').textContent=i<0?'➕ Novo comportamento':'✏️ Editar comportamento';
  let b=i<0?{name:'',points:1}:p().behaviors[i];
  document.getElementById('behaviorName').value=b.name;document.getElementById('behaviorPoints').value=b.points;
  document.getElementById('behaviorModal').classList.add('open');
 }
-function saveBehaviorConfig(){
+function saveBehaviorConfig(){if(!p()){alert('Cadastre uma criança antes de criar um comportamento.');return;}
  let name=document.getElementById('behaviorName').value.trim(),points=Number(document.getElementById('behaviorPoints').value);
  if(!name)return alert('Digite o nome do comportamento.');
  if(!Number.isFinite(points))return alert('Informe uma pontuação válida.');
@@ -339,14 +370,14 @@ function saveBehaviorConfig(){
  save();closeModal('behaviorModal');render();
 }
 function deleteBehavior(i){let b=p().behaviors[i];if(!confirm(`Excluir o comportamento "${b.name}"?`))return;p().behaviors.splice(i,1);save();render()}
-function openRewardModal(i=-1){
+function openRewardModal(i=-1){if(!p()){alert('Cadastre uma criança primeiro.');return;}
  window.editingReward=i;
  document.getElementById('rewardModalTitle').textContent=i<0?'➕ Nova recompensa':'✏️ Editar recompensa';
  let r=i<0?{name:'',cost:20}:p().rewards[i];
  document.getElementById('rewardName').value=r.name;document.getElementById('rewardCost').value=r.cost;
  document.getElementById('rewardModal').classList.add('open');
 }
-function saveRewardConfig(){
+function saveRewardConfig(){if(!p()){alert('Cadastre uma criança antes de criar uma recompensa.');return;}
  let name=document.getElementById('rewardName').value.trim(),cost=Math.max(1,Math.min(10000,Number(document.getElementById('rewardCost').value)||1));
  if(!name)return alert('Digite o nome da recompensa.');
  let i=window.editingReward;
@@ -430,7 +461,7 @@ function renderHistory(){
  document.getElementById('historySummary').textContent=all.length?`• ${all.length} ${all.length===1?'registro':'registros'} • toque para expandir/recolher`:'• nenhum registro';
  document.getElementById('history').innerHTML=h.length?h.map(z=>`<div style="padding:7px 0;border-bottom:1px solid var(--border)"><b>${dateBR(z.date)}</b> — ${esc(z.text)} <strong>${z.delta>0?'+'+z.delta:z.delta}</strong></div>`).join(''):'Nenhum lançamento ainda.';
 }
-function openMissionModal(i=-1){
+function openMissionModal(i=-1){if(!p()){alert('Cadastre uma criança primeiro.');return;}
  editingMission=i;document.getElementById('missionModalTitle').textContent=i<0?'➕ Nova missão':'✏️ Editar missão';
  let t=i<0?{name:'',points:10,frequency:'daily',days:[0,1,2,3,4,5,6]}:p().tasks[i];
  document.getElementById('missionName').value=t.name;document.getElementById('missionPoints').value=t.points;document.getElementById('missionFrequency').value=t.frequency;window.selectedDays=[...t.days];updateDayPicker();document.getElementById('missionModal').classList.add('open');
@@ -442,7 +473,7 @@ function updateDayPicker(){
 }
 function renderDayButtons(){let sel=window.selectedDays||[];document.getElementById('dayButtons').innerHTML=DAYNAMES.map((d,i)=>`<button type="button" class="dayOption ${sel.includes(i)?'selected':''}" onclick="toggleDay(${i})">${d}</button>`).join('')}
 function toggleDay(i){window.selectedDays=window.selectedDays||[];if(window.selectedDays.includes(i))window.selectedDays=window.selectedDays.filter(x=>x!==i);else window.selectedDays.push(i);renderDayButtons()}
-function saveMission(){
+function saveMission(){if(!p()){alert('Cadastre uma criança antes de criar uma missão.');return;}
  let name=document.getElementById('missionName').value.trim(),points=Math.max(1,Math.min(20,Number(document.getElementById('missionPoints').value)||1)),f=document.getElementById('missionFrequency').value;
  if(!name)return alert('Digite o nome da missão.');
  let days=f==='daily'?[0,1,2,3,4,5,6]:f==='weekdays'?[1,2,3,4,5]:f==='alldays'?[0,1,2,3,4,5,6]:[...(window.selectedDays||[])];
@@ -460,11 +491,11 @@ function saveChild(){
   if(name!==editingChild&&db.children[name])return alert('Já existe uma criança com esse nome.');
   if(name!==editingChild){db.children[name]=db.children[editingChild];delete db.children[editingChild];if(child===editingChild)child=name}
   db.children[name].avatar=avatar;
- }else{if(db.children[name])return alert('Já existe uma criança com esse nome.');let x=profile();x.avatar=avatar;db.children[name]=x;child=name}
+ }else{if(db.children[name])return alert('Já existe uma criança com esse nome.');let x=standardProfile(avatar);db.children[name]=x;child=name}
  save();closeModal('childModal');render();
 }
 function deleteChild(name){let names=Object.keys(db.children);if(names.length<=1)return alert('É necessário manter pelo menos uma criança.');if(!confirm(`Excluir o perfil de ${name} e todos os seus dados?`))return;delete db.children[name];if(child===name)child=Object.keys(db.children)[0];save();render()}
-function saveSettings(){let x=p();x.taskPoints=Math.max(1,Math.min(20,Number(document.getElementById('taskPoints').value)||1));x.weeklyGoal=Math.max(1,Math.min(100,Number(document.getElementById('weeklyGoal').value)||80));save();render()}
+function saveSettings(){if(!p()){alert('Cadastre uma criança antes de alterar as configurações.');return;}let x=p();x.taskPoints=Math.max(1,Math.min(20,Number(document.getElementById('taskPoints').value)||1));x.weeklyGoal=Math.max(1,Math.min(100,Number(document.getElementById('weeklyGoal').value)||80));save();render()}
 function restoreDefaults(){if(confirm('Restaurar as missões padrão?')){p().tasks=DEFAULT.map(x=>({...x,days:[...x.days]}));p().taskPoints=10;save();render()}}
 function clearAll(){if(confirm('Zerar pontuação, histórico e progresso deste perfil?')){let old=p(),fresh=profile();fresh.avatar=old.avatar;fresh.tasks=old.tasks;fresh.taskPoints=old.taskPoints;fresh.weeklyGoal=old.weeklyGoal;db.children[child]=fresh;save();render()}}
 function selectChild(n,b){child=n;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');render()}
