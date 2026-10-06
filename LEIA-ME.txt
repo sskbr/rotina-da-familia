@@ -1,0 +1,14 @@
+# Rotina da Família — PWA
+
+Arquivos:
+- index.html — aplicativo
+- manifest.json — configuração de instalação como app
+- service-worker.js — cache/offline
+- icon-192.png / icon-512.png — ícones
+
+## Como publicar
+Hospede esta pasta em um serviço que forneça HTTPS (por exemplo, GitHub Pages ou Cloudflare Pages).
+Depois abra a URL no celular e use a opção do navegador para "Adicionar à tela inicial" / "Instalar aplicativo".
+
+## Dados
+Os dados das crianças são salvos localmente no navegador. O JSON continua sendo um backup manual para transferência entre aparelhos.
